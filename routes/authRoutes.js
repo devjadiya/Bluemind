@@ -103,7 +103,7 @@ router.post('/login', async (req, res) => {
         }
 
         // Check if the referral code matches
-        if (user.referral_code !== referralCode) {
+        if (user.referralCode !== referralCode) {
             return res.status(400).json({ message: "Invalid credentials" });
         }
 
