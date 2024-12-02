@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h1 {
+            color: #2e8b57;
+            margin-bottom: 0;
+            font-size: 2em;
+        }
+
+        h2 {
+            color: #4682b4;
+            margin-top: 10px;
+            font-size: 1.5em;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 600px;
+        }
+
+        .info {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .logout-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #dc143c;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .logout-button:hover {
+            background-color: #b22222;
+        }
+
+        .current-time,
+        .email {
+            margin-top: 10px;
+            font-size: 18px;
+            color: #333;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.5em;
+            }
+
+            h2 {
+                font-size: 1.2em;
+            }
+
+            .container {
+                padding: 15px;
+                width: 95%;
+            }
+
+            .logout-button {
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+
+            .current-time,
+            .email {
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.2em;
+            }
+
+            h2 {
+                font-size: 1em;
+            }
+
+            .container {
+                padding: 10px;
+                width: 100%;
+            }
+
+            .logout-button {
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+
+            .current-time,
+            .email {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Dashboard</h1>
+        <h2>Hello, Welcome to Bluemind Global</h2>
+        <h2>Have a great day</h2>
+        <div class="info">
+            <div class="current-time" id="current-time"></div>
+            <div class="email">Email: bluemindglobal@gmail.com</div>
+        </div>
+        <button class="logout-button" onclick="logout()">Logout</button>
+    </div>
+
+    <script>
+        // Check if auth token is present
+        const token = localStorage.getItem('authToken');
+        if (token) {
+            // Redirect to login page if token is not found
+            window.location.href = 'Login.html';
+        }
+
+        function logout() {
+            localStorage.removeItem('authToken'); // Clear the token
+            window.location.href = 'index.html'; // Redirect to login page
+        }
+
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString();
+            document.getElementById('current-time').innerText = `Current Time: ${timeString}`;
+        }
+
+        // Update time every second
+        setInterval(updateTime, 1000);
+        // Set initial time
+        updateTime();
+    </script>
+
+</body>
+
+</html>

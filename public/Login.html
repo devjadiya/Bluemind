@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Login Account</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="shortcut icon" href="/assets/img/favicon.png" type="images/x-icon" />
+    <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
+
+</head>
+
+<body>
+    <div class="form-wrapper">
+        <main class="form-side">
+            <a href="index.html" title="Logo">
+                <img src="assets/signup/logo.svg" alt="Laplace Logo" class="logo">
+            </a>
+            <form class="my-form" id="loginForm">
+                <div class="form-welcome-row">
+                    <h1>Welcome back! &#128079;</h1>
+                    <h2>Login with your account!</h2>
+                </div>
+                <div class="text-field">
+                    <label for="email">Email</label>
+                    <input type="email" id="loginEmail" name="email" autocomplete="off" placeholder="you@example.com"
+                        required>
+                    <div class="error-message">Email in incorrect format</div>
+                </div>
+                <div class="text-field">
+                    <label for="password">Password</label>
+                    <input id="loginPassword" type="password" name="password" placeholder="Your password" title="Minimum 6 characters at 
+                                                        least 1 Alphabet and 1 Number">
+                    <div class="error-message">Minimum 6 characters at
+                        least 1 Alphabet and 1 Number</div>
+                </div>
+                <div id="referral-code-field">
+                    <div class="text-field">
+                        <label for="referral-code">Referral Code</label>
+                        <input id="loginReferralCode" type="text" name="referral-code"
+                            placeholder="Enter referral code">
+                    </div>
+                </div>
+                <div style="margin-top: 15px; display: flex; align-items: end; justify-content: flex-end;">
+                    <a href="Reset_Password.html" style="display: inline-block; margin-right: 100px; color: #363435; text-decoration: none;">Forgot Password?</a>
+                </div>
+                
+                <button class="my-form__button" type="button" onclick="login()">
+                    Sign In
+                </button>
+                <div class="my-form__actions">
+                    <div class="my-form__row">
+                        <span>Don't have an account?</span>
+                        <a href="Signup.html" title="Reset Password">
+                            Sign Up
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </main>
+        <aside class="info-side">
+            <div class="video-wrapper">
+                <img id="signupAltImage" src="assets/signup/login_alt.png" alt="Signup Placeholder" class="placeholder-image">
+                <dotlottie-player id="signupAnimation" src="assets/signup/Login.json" background="transparent" speed="1" loop
+                    autoplay style="display: none;"></dotlottie-player>
+            </div>
+        </aside>
+    </div>
+    <script>
+   document.addEventListener("DOMContentLoaded", function () {
+    const lottiePlayer = document.getElementById("signupAnimation");
+    const placeholderImage = document.getElementById("signupAltImage");
+
+    // Event listener for when the Lottie animation is loaded and ready
+    lottiePlayer.addEventListener('ready', () => {
+        placeholderImage.style.display = 'none';
+        lottiePlayer.style.display = 'block';
+    });
+
+    // Trigger the Lottie player to load the animation
+    lottiePlayer.load();
+});
+
+// Login Form Validation
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    async function login() {
+        const email = document.getElementById('loginEmail').value;
+        const password = document.getElementById('loginPassword').value;
+        const referralCode = document.getElementById('loginReferralCode').value;
+
+        try {
+            const response = await fetch('https://bluemind-three.vercel.app/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: email,
+                    password: password,
+                    referralCode: referralCode
+                })
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                if (result.message === "Login successful") {
+                    alert("Login successful");
+                    window.location.href = "Dashboard.html"; // Redirect to Dashboard
+                } else {
+                    alert(result.message);
+                }
+            } else {
+                alert('Login failed: ' + result.message);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Login failed: ' + error.message);
+        }
+    }
+
+    // Expose the login function globally
+    window.login = login;
+});
+
+    </script>
+
+      
+</body>
+
+</html>
